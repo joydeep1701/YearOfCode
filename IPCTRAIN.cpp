@@ -49,19 +49,32 @@ int main(void) {
             pqd.push(Trainer(d,t,s));
         }
         for (int d = 1; d <= D; d++) {
-            while (pqd.empty() || pqd.top().d == d) {
+            // std::cout << "d_iter: " << d << "\n";
+            while (!pqd.empty() && pqd.top().d == d) {
+                // std::cout << pqd.empty() << "\n";
                 Trainer temp = pqd.top();
-                std::cout << temp.d << " " << temp.s << "\n";
+                // std::cout << "d: " << temp.d << " t:"<< temp.t << " s:" << temp.s << "\n";
                 pqs.push(temp);
                 pqd.pop();
             }
-            Trainer temp = pqs.top();
-            std::cout << "Popped pqs" << temp.d << "\n" ;
-            pqs.pop();
-            temp.decrement();
-            if (temp.t > 1) {
-                pqs.push(temp);
+            if (!pqs.empty()) {
+                Trainer temp = pqs.top();
+                // std::cout << "Popped from pqs, d: " << temp.d << " t:"<< temp.t << " s:" << temp.s << "\n";
+                pqs.pop();
+                if (temp.t > 1) {
+                    temp.decrement();
+                    pqs.push(temp);
+                }
             }
+            
         }
+        long long int total_sadness = 0;
+        // Remaining stuff
+        while (!pqs.empty()) {
+            Trainer temp = pqs.top();
+            pqs.pop();
+            total_sadness += (long long int) temp.t * temp.s;
+        }
+        std::cout << total_sadness << "\n";
     }
 }

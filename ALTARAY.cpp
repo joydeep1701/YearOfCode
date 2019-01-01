@@ -1,3 +1,4 @@
+// https://www.codechef.com/problems/ALTARAY
 #include <iostream>
 
 int M[100001];
